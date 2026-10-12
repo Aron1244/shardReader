@@ -8,6 +8,7 @@ export type Book = {
   filePath: string;
   format: BookFormat;
   sizeBytes: number | null;
+  coverFilename: string | null;
   importedAt: string;
   lastOpenedAt: string | null;
   isUnavailable: boolean;
