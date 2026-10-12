@@ -35,8 +35,16 @@ export function ReaderPage() {
   const { bookId } = useParams<{ bookId?: string }>();
   const [book, setBook] = useState<Book | null>(null);
   const [status, setStatus] = useState<Status>({ kind: "loading" });
-  const [location, setLocation] = useState<Location | null>(null);
+  const [location, setLocation] = useState<Location | null>({
+    index: 0,
+    fraction: 0,
+    cfi: null,
+    tocItem: null,
+    page: null,
+    pages: null,
+  });
   const containerRef = useRef<HTMLDivElement>(null);
+  const globalPageRef = useRef(0);
   const viewRef = useRef<HTMLElement | null>(null);
   const blobUrlRef = useRef<string | null>(null);
 
@@ -99,38 +107,33 @@ export function ReaderPage() {
         // location units (`location.current` / `location.total`) which are
         // a consistent book-wide byte/1500 metric that never resets per
         // section. Both numbers are in the same units and monotonically grow.
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const book = v.book as
-          | { pageList?: unknown[]; sections?: unknown[] }
-          | undefined;
-        const totalPages = book?.pageList?.length
-          ? book.pageList.length
-          : null;
-
         v.addEventListener("relocate", (e: { detail: Location & { cfi: string } }) => {
+          // The page counter is owned by the navigation handlers (goPrev /
+          // goNext / keyboard) so it can correctly decrement on back. This
+          // listener only syncs the rest of the UI state (current section,
+          // total pages, fraction, etc.) and seeds the counter to 1 the
+          // first time foliate reports a real position.
           const detail = e.detail as Location & {
             cfi: string;
             location?: { current?: number; total?: number };
             pageItem?: { label?: string } | null;
           };
-          const pageItemLabel = detail.pageItem?.label ?? null;
-          let currentPageNum: number | null = null;
-          if (pageItemLabel) {
-            const parsed = Number.parseInt(String(pageItemLabel), 10);
-            if (!Number.isNaN(parsed)) currentPageNum = parsed;
+          if (globalPageRef.current === 0) {
+            globalPageRef.current = 1;
           }
-          if (currentPageNum == null) {
-            currentPageNum = detail.location?.current ?? null;
-          }
-
-          setLocation({
-            index: detail.index,
-            fraction: detail.fraction ?? 0,
-            cfi: detail.cfi ?? null,
-            tocItem: detail.tocItem ?? null,
-            page: currentPageNum,
-            pages: totalPages ?? detail.location?.total ?? null,
-          });
+          setLocation((prev) =>
+            prev
+              ? {
+                  ...prev,
+                  index: detail.index,
+                  fraction: detail.fraction ?? 0,
+                  cfi: detail.cfi ?? null,
+                  tocItem: detail.tocItem ?? null,
+                  page: globalPageRef.current,
+                  pages: detail.location?.total ?? null,
+                }
+              : prev,
+          );
         });
 
         if (!cancelled) setStatus({ kind: "ready" });
@@ -162,8 +165,6 @@ export function ReaderPage() {
     if (status.kind !== "ready") return;
     const handler = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement | null;
-      // Ignore when the user is typing in an input/textarea/contenteditable,
-      // so future settings panel inputs don't get hijacked.
       if (
         target &&
         (target.tagName === "INPUT" ||
@@ -181,12 +182,20 @@ export function ReaderPage() {
         case "A":
           e.preventDefault();
           v.prev();
+          globalPageRef.current = Math.max(1, globalPageRef.current - 1);
+          setLocation((prev) =>
+            prev ? { ...prev, page: globalPageRef.current } : prev,
+          );
           break;
         case "ArrowRight":
         case "d":
         case "D":
           e.preventDefault();
           v.next();
+          globalPageRef.current += 1;
+          setLocation((prev) =>
+            prev ? { ...prev, page: globalPageRef.current } : prev,
+          );
           break;
       }
     };
@@ -197,10 +206,19 @@ export function ReaderPage() {
   const goPrev = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (viewRef.current as any)?.prev();
+    globalPageRef.current = Math.max(1, globalPageRef.current - 1);
+    setLocation((prev) =>
+      prev ? { ...prev, page: globalPageRef.current } : prev,
+    );
   };
+
   const goNext = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (viewRef.current as any)?.next();
+    globalPageRef.current += 1;
+    setLocation((prev) =>
+      prev ? { ...prev, page: globalPageRef.current } : prev,
+    );
   };
 
   const percent = Math.round((location?.fraction ?? 0) * 100);
