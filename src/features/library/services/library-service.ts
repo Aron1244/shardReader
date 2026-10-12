@@ -48,6 +48,11 @@ export async function removeBook(id: string): Promise<void> {
   await invoke("remove_book", { id });
 }
 
+export async function readBookBytes(id: string): Promise<Uint8Array> {
+  const numbers = await invoke<number[]>("read_book_bytes", { id });
+  return new Uint8Array(numbers);
+}
+
 const coverCache = new Map<string, string>();
 
 export async function getBookCoverDataUrl(id: string): Promise<string | null> {

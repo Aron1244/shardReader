@@ -481,6 +481,16 @@ fn get_book_cover(
 }
 
 #[tauri::command]
+fn read_book_bytes(app: AppHandle, id: String) -> Result<Vec<u8>, String> {
+    let books = read_index(&app)?;
+    let book = books
+        .iter()
+        .find(|b| b.id == id)
+        .ok_or_else(|| "Book not found".to_string())?;
+    std::fs::read(&book.file_path).map_err(|e| format!("Cannot read book file: {e}"))
+}
+
+#[tauri::command]
 fn ping() -> Result<String, String> {
     Ok("pong".to_string())
 }
@@ -510,7 +520,8 @@ pub fn run() {
             check_file_exists,
             list_books,
             remove_book,
-            get_book_cover
+            get_book_cover,
+            read_book_bytes
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
