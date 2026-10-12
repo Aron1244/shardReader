@@ -1,0 +1,57 @@
+{
+  "app": {
+    "name": "shardReader",
+    "tagline": "Un lugar tranquilo para leer"
+  },
+  "nav": {
+    "library": "Biblioteca",
+    "reader": "Lector",
+    "settings": "Ajustes"
+  },
+  "library": {
+    "empty": "Tu biblioteca está vacía.",
+    "import": "Importar EPUB",
+    "importing": "Importando…",
+    "importError": "No se pudo importar el libro.",
+    "search": "Buscar libros",
+    "sortBy": "Ordenar por",
+    "filter": "Filtrar",
+    "remove": "Quitar de la biblioteca",
+    "removeConfirm": "¿Quitar este libro de tu biblioteca? El archivo en disco no se eliminará."
+  },
+  "reader": {
+    "openBook": "Abre un libro desde tu biblioteca",
+    "previous": "Página anterior",
+    "next": "Página siguiente",
+    "toc": "Tabla de contenidos",
+    "settings": "Ajustes de lectura",
+    "fontSize": "Tamaño de letra",
+    "fontFamily": "Tipo de letra",
+    "lineHeight": "Interlineado",
+    "margin": "Márgenes",
+    "theme": "Tema",
+    "themes": {
+      "light": "Claro",
+      "dark": "Oscuro",
+      "sepia": "Sepia"
+    }
+  },
+  "settings": {
+    "general": "General",
+    "appearance": "Apariencia",
+    "library": "Biblioteca",
+    "storage": "Almacenamiento",
+    "language": "Idioma",
+    "languageHint": "Idioma de la interfaz",
+    "theme": "Tema",
+    "themeHint": "Claro, oscuro o seguir el sistema"
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "loading": "Cargando…",
+    "retry": "Reintentar"
+  }
+}

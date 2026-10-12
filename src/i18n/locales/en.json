@@ -1,0 +1,57 @@
+{
+  "app": {
+    "name": "shardReader",
+    "tagline": "A calm place to read"
+  },
+  "nav": {
+    "library": "Library",
+    "reader": "Reader",
+    "settings": "Settings"
+  },
+  "library": {
+    "empty": "Your library is empty.",
+    "import": "Import EPUB",
+    "importing": "Importing…",
+    "importError": "Could not import the book.",
+    "search": "Search books",
+    "sortBy": "Sort by",
+    "filter": "Filter",
+    "remove": "Remove from library",
+    "removeConfirm": "Remove this book from your library? The file on disk won't be deleted."
+  },
+  "reader": {
+    "openBook": "Open a book from your library",
+    "previous": "Previous page",
+    "next": "Next page",
+    "toc": "Table of contents",
+    "settings": "Reading settings",
+    "fontSize": "Font size",
+    "fontFamily": "Font family",
+    "lineHeight": "Line height",
+    "margin": "Margins",
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark",
+      "sepia": "Sepia"
+    }
+  },
+  "settings": {
+    "general": "General",
+    "appearance": "Appearance",
+    "library": "Library",
+    "storage": "Storage",
+    "language": "Language",
+    "languageHint": "Interface language",
+    "theme": "Theme",
+    "themeHint": "Light, dark or follow the system"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "close": "Close",
+    "loading": "Loading…",
+    "retry": "Retry"
+  }
+}

@@ -22,3 +22,17 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# TypeScript incremental build cache
+*.tsbuildinfo
+
+# Test coverage
+coverage
+
+# User-provided EPUB and other ebook samples — never commit these
+*.epub
+*.mobi
+*.azw3
+*.fb2
+*.cbz
+*.pdf
