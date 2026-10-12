@@ -17,10 +17,18 @@ tauri-build = { version = "2", features = [] }
 tauri = { version = "2", features = [] }
 tauri-plugin-dialog = "2"
 tauri-plugin-fs = "2"
-tauri-plugin-sql = { version = "2", features = ["sqlite"] }
 tauri-plugin-store = "2"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+roxmltree = "0.20"
+uuid = { version = "1", features = ["v4"] }
+# EPUB uses only DEFLATE — disable every other codec zip brings in
+zip = { version = "2", default-features = false, features = ["deflate"] }
+
+[profile.dev]
+incremental = true
+debug = 0
+codegen-units = 256
 
 [profile.release]
 codegen-units = 1

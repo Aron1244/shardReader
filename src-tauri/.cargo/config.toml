@@ -1,0 +1,17 @@
+# ---- Faster builds on Windows ----
+
+# Use lld linker (much faster than MSVC link for our size).
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"
+rustflags = ["-C", "link-arg=-fuse-ld=lld"]
+
+# Wrap rustc with sccache — caches compiled crates on disk so
+# subsequent builds skip recompilation when sources haven't changed.
+[build]
+rustc-wrapper = "C:/Users/Aron/.cargo/bin/sccache.exe"
+
+# sccache configuration. Disk cache in a stable location so it
+# survives reboots and OS disk cleanup.
+[env]
+SCCACHE_DIR = "C:/Users/Aron/.cache/sccache"
+SCCACHE_CACHE_SIZE = "10G"

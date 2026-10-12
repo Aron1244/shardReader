@@ -10,14 +10,23 @@
   },
   "library": {
     "empty": "Your library is empty.",
+    "emptyHint": "Import an EPUB to start reading.",
     "import": "Import EPUB",
+    "importOne": "Import one",
+    "importMany": "Import many",
     "importing": "Importing…",
     "importError": "Could not import the book.",
+    "importErrors": "{count} book(s) could not be imported.",
     "search": "Search books",
     "sortBy": "Sort by",
     "filter": "Filter",
     "remove": "Remove from library",
-    "removeConfirm": "Remove this book from your library? The file on disk won't be deleted."
+    "removeConfirm": "Remove this book from your library? The file on disk won't be deleted.",
+    "removeCancel": "Cancel",
+    "removeConfirmAction": "Remove",
+    "openReader": "Read",
+    "unavailable": "File not found at:",
+    "unknownAuthor": "Unknown author"
   },
   "reader": {
     "openBook": "Open a book from your library",
